@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<body onload="train()">
+    <p id="para">Model is Training</p>
+    <br>
+    <button><a href="/">Home</a></button>
+
+</body>
+<script>
+    function train()
+    {
+    $.ajax({
+     type: "POST",
+     url: "{{'training'}}",
+     data: { csrfmiddlewaretoken: '{{ csrf_token }}',},
+     success: function callback(response){
+                 console.log(response);
+                 document.getElementById('para').innerHTML="Model is Trained";
+              },
+    error: function callerror(error){
+        document.getElementById('para').innerHTML="Training Failed";
+    }
+    });
+}
+    
+  </script>
+</html>

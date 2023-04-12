@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged in user</title>
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<body>
+  <p class="welcome">Welcome {{request.user}}</p>
+  
+  <p class="demo">This is testing website </p>
+  <div class="options">
+  <a href="/upload" class="buttons"><p class="text-decor">Upload images</p></a>
+
+  <a href="/train" class="buttons" onclick=""><p class="text-decor">Train Model</p></a>
+  <a href="#" class="buttons" onclick="camera_detection()"><p class="text-decor">Live Detect</p></a>
+  <a href="#" onclick="human_face_detection()" class="buttons"><p class="text-decor">Detect Human</p></a>
+  <a href="/logout" class="buttons logout-val"><p class="text-decor">Logout</p></a>
+</div>
+</body>
+<style>
+  body{
+    background-color: white;
+    display:relative;
+  }
+  .welcome{
+    color: rgb(84, 84, 240);
+    text-align: center;
+    justify-content: center;
+    font-size : 40px;
+    font-weight: bold;
+    margin: 40px 0px 20px 0;
+  }
+  .demo{
+    color: rgba(84, 84, 240,0.98);
+    text-align : center;
+    justify-content: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0;
+  }
+  .options{
+      justify-content:center;
+      text-align:center;
+      display:relative;
+      padding-top: 1.75rem;
+      font-size: 1.4rem;
+      padding-right:1rem;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+      
+  }
+  .buttons{
+    display: flexbox;
+    margin: 50px auto;
+    background-color:white;
+    padding:10px 20px;
+    background:linear-gradient(to right, #375BDC, #4D70EF);
+    background-size: 40px 120px; 
+    background-repeat: no-repeat;
+    box-shadow: 0 5px 7px -1px rgba(51, 51, 51, 0.23);
+    width: 20px;
+    height:100px;
+    transition:all ease 0.5s;
+  }
+  .buttons:hover{
+    color:black;
+    transform: scale(1.5);
+  }
+  .text-decor{
+    display:inline-block;
+    padding-left:30px;
+  }
+  .logout-val{
+    background:linear-gradient(to right, #ef0606, #f96464) no-repeat;
+    background-size: 40px 120px; 
+
+  }
+
+
+
+</style>
+
+<script>
+  function camera_detection(){
+    
+    $.ajax({
+     type: "POST",
+     url: "{{'detectface'}}",
+     data: { csrfmiddlewaretoken: '{{ csrf_token }}',},
+     success: function callback(response){
+                 console.log(response);
+              },
+    error: function callerror(error){
+        console.log("Unable to start camera");
+    }
+    });
+  }
+
+  function human_face_detection(){
+    
+    $.ajax({
+     type: "POST",
+     url: "{{'detecthumanface'}}",
+     data: { csrfmiddlewaretoken: '{{ csrf_token }}',},
+     success: function callback(response){
+                 console.log(response);
+              },
+    error: function callerror(error){
+        console.log("Unable to start camera");
+        console.log("");
+    }
+    });
+  }
+
+</script>
+
+</html>

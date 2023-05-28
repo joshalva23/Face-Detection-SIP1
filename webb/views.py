@@ -60,8 +60,17 @@ def deleteimage(request):
     print("----",'Loading')
     if image is not None:
         image.delete()
-    print("----",MEDIA_ROOT+"\\"+path[0:len("images")]+"\\"+path[len("images")+1:])
-    remove(MEDIA_ROOT+"\\"+path[0:len("images")]+"\\"+path[len("images")+1:])
+    person=[]
+    for x in path[len("images")+1:]:
+        if x is not '/':
+            person.append(x)
+        else:
+            break
+    print("----",person)
+    person = ''.join(str(x) for x in person)
+    absolute_path = MEDIA_ROOT+"\\"+path[0:len("images")]+"\\"+person+"\\"+path[len("images")+len(person)+2:]
+    print("----",absolute_path)
+    remove(absolute_path)
     return redirect('/upload')
     
 def train(request):

@@ -2,8 +2,9 @@ import cv2 as cv
 import os
 import numpy as np
 from django.http import HttpResponse
+from web.settings import MEDIA_ROOT
 
-
+DIR = MEDIA_ROOT + "\\images"
 def live_detect(request):
 
     def resize(frame, scale=0.4):
@@ -11,10 +12,10 @@ def live_detect(request):
         return cv.resize(frame, dimension)
 
 
-    pep = []
+    people = []
 
-    for i in os.listdir(r"C:\Users\hp\Pictures\FO"):
-        pep.append(i)
+    for i in os.listdir(DIR):
+        people.append(i)
 
     # DIR = r'C:\Users\Rohith gowda M\OneDrive\Desktop\New folder'
     # feats = []
@@ -24,9 +25,9 @@ def live_detect(request):
 
 
     # def unk():
-    #     for i in pep:
+    #     for i in people:
     #         img_path = os.path.join(DIR, i)
-    #         label = pep.index(i)
+    #         label = people.index(i)
 
     #         for img in os.listdir(img_path):
     #             im_path = os.path.join(img_path, img)
@@ -75,10 +76,10 @@ def live_detect(request):
         dt = gray[w:w+r, q:q+r]
 
         label, confi = faces_mode.predict(dt)
-        print(f'The image is {pep[label]} with confidence of {confi}')
+        print(f'The image is {people[label]} with confidence of {confi}')
 
         cv.rectangle(img1, (q, w), (q+e, w+r), (0, 255, 0), thickness=2)
-        cv.putText(img1, str(pep[label]), (50, 50), cv.FONT_HERSHEY_DUPLEX, 1., (0, 255, 0), thickness=2)
+        cv.putText(img1, str(people[label]), (50, 50), cv.FONT_HERSHEY_DUPLEX, 1., (0, 255, 0), thickness=2)
 
     cv.imshow('DEt', img1)
     cv.waitKey(0)
@@ -99,10 +100,10 @@ def live_detect(request):
             dew = gray[s:s+f, a:a+d]
 
             label, confi = face_rec.predict(dew)
-            print(f'The image is {pep[label]} with confidence {confi}')
+            print(f'The image is {people[label]} with confidence {confi}')
 
             cv.rectangle(frame1, (a, s), (a+d, s+f), (0, 255, 0), thickness=5)
-            cv.putText(frame1, str(pep[label]), (40, 40), cv.FONT_HERSHEY_DUPLEX, 1., (225, 0, 0), thickness=2)
+            cv.putText(frame1, str(people[label]), (40, 40), cv.FONT_HERSHEY_DUPLEX, 1., (225, 0, 0), thickness=2)
 
         cv.imshow('Mukha', frame1)
 

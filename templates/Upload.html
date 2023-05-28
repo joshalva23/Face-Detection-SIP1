@@ -17,7 +17,7 @@
     <form action="{%url 'upload' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="images" multiple>
-        <input type="text" name="folder" placeholder="Enter name">
+        <input type="text" name="folder" placeholder="Enter name" value="un_named">
         <button>Upload</button>
         <button><a href="/">Home</a></button>
         
@@ -29,7 +29,7 @@
         <img src="{{img.images.url}}" alt="Image">
         
         <input type="hidden" name="imagepath" value="{{img.images}}">
-        <button type="submit"  >Delete</button>   
+        <button type="submit" >Delete</button>   
     </form>
     
     {% endfor %}
